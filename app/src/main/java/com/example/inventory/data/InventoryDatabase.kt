@@ -35,25 +35,36 @@ abstract class InventoryDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
 
+    //companion object 在 Kotlin 中是一種靜態的類成員，用於實現類的功能
+    //在這裡，它用來提供 InventoryDatabase 類的單例實例
     companion object {
+
+        //Instance變數 指向 InventoryDatabase 的單例實例，初始為 null
+        //@Volatile 註解確保了 Instance 變數在多執行緒環境下的可見性
+        //所有執行緒看到的 Instance 變數都是最新的。
         @Volatile
         private var Instance: InventoryDatabase? = null
 
+        // getDatabase 方法用於獲取資料庫實例 
+        // Context 是 Android 應用程序中一個核心概念，它提供了對應用程序和系統資源的訪問
         fun getDatabase(context: Context): InventoryDatabase {
-            // if the Instance is not null, return it, otherwise create a new database instance.
+            
+            // 如果 Instance 已經初始化，則返回該實例
             return Instance ?: synchronized(this) {
+
+                // 如果 Instance 為 null
+                // 使用 Room.databaseBuilder 創建新的資料庫實例
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
-                    /**
-                     * Setting this option in your app's database builder means that Room
-                     * permanently deletes all data from the tables in your database when it
-                     * attempts to perform a migration with no defined migration path.
-                     */
-                    .fallbackToDestructiveMigration()
-                    .build()
-                    .also { Instance = it }
+                    .fallbackToDestructiveMigration()  // 當資料庫遷移路徑未定義時會刪除所有數據並重新建立資料庫
+                    .build() 
+                    .also { Instance = it } // 確保在創建新實例後將其賦值給 Instance，以便未來的請求可以重複使用這個實例
             }
         }
     }
+    //這樣的設計確保了 InventoryDatabase 類的實例在應用中是唯一的（單例模式）
+    //避免了多次創建資料庫實例，從而提高了效能和資源使用效率
+
+    
 }
 
 // 定義了一個抽象的類 InventoryDatabase 繼承自 RoomDatabase
