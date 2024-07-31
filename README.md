@@ -27,3 +27,10 @@ Getting Started
 ---------------
 
 1. Download and run the app.
+
+
+程式碼觀看順序
+============
+1. Item
+2. ItemDao
+3. InventoryDatabase

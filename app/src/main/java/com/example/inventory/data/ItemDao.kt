@@ -27,6 +27,10 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Database access object to access the Inventory database
  */
+// 第一站 在Item.kt
+// 這裡是 第二站
+// DAO 是所謂的 資料存取物件
+// 但很顯然 他是個介面 完全就不是 所謂的 具體的物件
 @Dao
 interface ItemDao {
 
@@ -47,3 +51,17 @@ interface ItemDao {
     @Delete
     suspend fun delete(item: Item)
 }
+
+// Kotlin函數 與 ROOM庫內封裝的功能
+// 透過 註解 聯繫起來
+// 這個程式本身只要定義需要做什麼
+// 具體怎麼去做 外包給ROOM庫 去實現
+// 註解 就好像是 外包的記號
+// 指明了 這一部分的功能會由其他庫去實現
+
+// 本程式定義了 5個功能
+// 1.取得所有資料
+// 2.給定id 取得對應的資料
+// 3.插入資料
+// 4.更新資料
+// 5.刪除資料

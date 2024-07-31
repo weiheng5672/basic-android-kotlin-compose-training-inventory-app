@@ -24,6 +24,12 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton Instance object.
  */
+//這裡是第三站
+//第一站 定義了 要儲存的東西
+//第二站 定義了 存取他的方式
+//這裡 定義了 他要存在哪裡
+//當然 存在Database
+
 @Database(entities = [Item::class], version = 1, exportSchema = false)
 abstract class InventoryDatabase : RoomDatabase() {
 
@@ -49,3 +55,20 @@ abstract class InventoryDatabase : RoomDatabase() {
         }
     }
 }
+
+// 定義了一個抽象的類 InventoryDatabase 繼承自 RoomDatabase
+// 註解 @Database 用來標註 InventoryDatabase 他就是我們要儲存資料的地方
+// entities = [Item::class] 代表 要存的每一筆資料是 Item
+
+// 那麼他到底是在哪裡呢? 我們手機內存的哪裡呢?
+// 我們不需要知道 具體的工作 我們外包給了 ROOM庫去處理
+// 對於 這個專案來說 資料就儲存在這裡
+// 要使用資料就要來這邊存取
+// 但真正意義上放資料的位置 這邊不知道 也不需要知道
+// 這就是為何這是個抽象的類
+
+// 他還有個抽象的函數 代表存取資料的功能
+// 就是在 ItemDao中定義的 5個功能
+
+
+
