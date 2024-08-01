@@ -40,3 +40,13 @@ Getting Started
 
 6. AppContainer
 7. InventoryApplication
+
+8. InventoryApp
+9. InventoryNavGraph
+10. NavigationDestination
+
+11. HomeScreen、HomeViewModel
+12. ItemEntryScreen、ItemEntryViewModel
+13. ItemDetailsScreen、ItemDetailsViewModel
+14. ItemEditScreen、ItemEditViewModel
+15. AppViewModelProvider
