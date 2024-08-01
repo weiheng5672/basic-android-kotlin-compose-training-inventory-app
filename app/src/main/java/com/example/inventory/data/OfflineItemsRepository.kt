@@ -29,3 +29,12 @@ class OfflineItemsRepository(private val itemDao: ItemDao) : ItemsRepository {
 
     override suspend fun updateItem(item: Item) = itemDao.update(item)
 }
+// ItemsRepository 是介面
+// 而這個類 OfflineItemsRepository 是實現那介面的 類
+// 也就是說 其實 OfflineItemsRepository 才是那個手下
+// ItemsRepository 相當於 工作項目
+// OfflineItemsRepository 才是真正執行工作項目的人
+// 他的主建構式 有ItemDao 類型的變數
+// 使用到 OfflineItemsRepository 的地方 將會在 AppContainer
+// 那裡會傳入一個 InventoryDatabase 資料庫的實例
+// 去使用 ItemDao的函數

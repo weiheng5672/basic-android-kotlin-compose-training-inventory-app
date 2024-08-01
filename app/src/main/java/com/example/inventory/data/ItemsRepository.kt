@@ -47,3 +47,10 @@ interface ItemsRepository {
      */
     suspend fun updateItem(item: Item)
 }
+// 這個介面中定義的5個函數 和 ItemDao中定義的5個函數 是一樣的
+// 但這裡沒有 和資料庫有關的註解 是純的Kotlin程式
+// 為什麼要這樣多定義一個介面 不直接用ItemDao ?
+// 因為 前面說過 使用註解相當於外包
+// 但老闆找人外包 肯定不會自己去找 而是交代手下去做
+// 這裡就相當於 那個手下
+

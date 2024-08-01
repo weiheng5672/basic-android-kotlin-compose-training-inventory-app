@@ -34,3 +34,6 @@ Getting Started
 1. Item
 2. ItemDao
 3. InventoryDatabase
+4. ItemsRepository
+5. OfflineItemsRepository
+6. AppContainer
