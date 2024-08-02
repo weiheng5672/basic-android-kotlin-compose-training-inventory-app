@@ -42,7 +42,11 @@ import com.example.inventory.ui.navigation.InventoryNavHost
 // 而這裡就是本專案中 UI的最上層
 // 意思就是 呼叫InventoryApp
 // 就相當於 呼叫了所有的UI
-// 呼叫的InventoryApp 就是 MainActivity 
+// 呼叫的InventoryApp 就是 MainActivity
+// 這個函數內 只有一個東西 InventoryNavHost
+// 這個APP 有四個畫面
+// InventoryNavHost 能夠根據情況
+// 去顯示不同的畫面
 @Composable
 fun InventoryApp(navController: NavHostController = rememberNavController()) {
     InventoryNavHost(navController = navController)

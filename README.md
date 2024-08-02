@@ -42,11 +42,10 @@ Getting Started
 7. InventoryApplication
 
 8. InventoryApp、MainActivity
-9. InventoryNavGraph
-10. NavigationDestination
+9. InventoryNavGraph、NavigationDestination
 
-11. HomeScreen、HomeViewModel
-12. ItemEntryScreen、ItemEntryViewModel
-13. ItemDetailsScreen、ItemDetailsViewModel
-14. ItemEditScreen、ItemEditViewModel
-15. AppViewModelProvider
+10. HomeScreen、HomeViewModel
+11. ItemEntryScreen、ItemEntryViewModel
+12. ItemDetailsScreen、ItemDetailsViewModel
+13. ItemEditScreen、ItemEditViewModel
+14. AppViewModelProvider

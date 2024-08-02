@@ -63,6 +63,9 @@ import com.example.inventory.ui.item.formatedPrice
 import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.ui.theme.InventoryTheme
 
+// 定義 物件HomeDestination 實現 介面NavigationDestination
+// 這裡沒有而外定義其他資訊
+// 這個部分就是 用來在 NavHost 指示 HomeScreen的位址
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.app_name

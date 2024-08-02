@@ -35,6 +35,11 @@ import com.example.inventory.ui.item.ItemEntryScreen
 /**
  * Provides Navigation graph for the application.
  */
+// 4個 composable 對應的就是 4個畫面
+// composable 需要傳入的引數 就是 他的位址
+// 所謂的位址 就是 一個字串
+// 在這個專案裡 用來代表 composable的位置
+// 程式的其他部分都是透過 所謂的navController 參照這個地方
 @Composable
 fun InventoryNavHost(
     navController: NavHostController,
@@ -42,9 +47,14 @@ fun InventoryNavHost(
 ) {
     NavHost(
         navController = navController,
+        //預設顯示 HomeScreen
         startDestination = HomeDestination.route,
         modifier = modifier
     ) {
+        // 比方說 這邊就表示 HomeDestination.route
+        // 就是 HomeScreen 這個 composable 的位址
+        // 也就是當我 在其他地方指示 我要去HomeDestination.route
+        // 他就會從那個地方 跳轉到 HomeScreen
         composable(route = HomeDestination.route) {
             HomeScreen(
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
@@ -53,6 +63,10 @@ fun InventoryNavHost(
                 }
             )
         }
+
+        // 同上
+        // 這邊再強調，在安卓Compose導覽的邏輯中
+        // 就是要在這邊指定 各個composable 的位址
         composable(route = ItemEntryDestination.route) {
             ItemEntryScreen(
                 navigateBack = { navController.popBackStack() },
