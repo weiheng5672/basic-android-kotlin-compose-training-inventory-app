@@ -51,7 +51,20 @@ fun InventoryApp(navController: NavHostController = rememberNavController()) {
 /**
  * App bar to display title and conditionally display the back navigation.
  */
-// 這裡定義了
+// 這裡定義了 所謂的 AppBar
+// 他是 UI的一部分
+// 獨立在這邊就是有其特殊性
+
+// 實務上 一個APP 的畫面邊上
+// 可能是 上下左右
+// 都會有一個不動的地方 顯是這裡是哪裡
+// 讓人可以去選擇要看什麼東西 或是回到上一頁
+// 這邊就是定義了 這麼一個東西
+// 可以看出來 有點複雜
+// 在這個專案中 有些畫面的這個部分是會動的
+// 有些部分是固定的
+// 端看使用到這部分的 Composable 怎麼去
+// 使用這邊定義的參數
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryTopAppBar(
