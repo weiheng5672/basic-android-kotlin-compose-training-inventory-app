@@ -49,22 +49,19 @@ fun InventoryApp(navController: NavHostController = rememberNavController()) {
 }
 
 /**
- * App bar to display title and conditionally display the back navigation.
+ * 顯示應用程式的標題欄（App Bar），並根據需要顯示返回導航圖標。
+ *
+ * 這個組件是一個 UI 元件，通常顯示在應用程式的頂部，並用於顯示標題和提供導航功能。
+ * 在實務中，應用程式的畫面邊上通常會有一個固定的區域，顯示當前頁面資訊或提供導航選擇。
+ * 在這個專案中，有些畫面的標題欄可能會根據需要變動，而有些則保持固定。
+ * 使用這個 Composable 函數時，可以根據需要設置標題、是否顯示返回圖標、滾動行為等。
+ *
+ * @param title 標題文本。
+ * @param canNavigateBack 是否顯示返回導航圖標。
+ * @param modifier 用於修飾組件的外觀和佈局。
+ * @param scrollBehavior 滾動行為，可以為 null。
+ * @param navigateUp 返回按鈕點擊後的操作，默認為空函數。
  */
-// 這裡定義了 所謂的 AppBar
-// 他是 UI的一部分
-// 獨立在這邊就是有其特殊性
-
-// 實務上 一個APP 的畫面邊上
-// 可能是 上下左右
-// 都會有一個不動的地方 顯是這裡是哪裡
-// 讓人可以去選擇要看什麼東西 或是回到上一頁
-// 這邊就是定義了 這麼一個東西
-// 可以看出來 有點複雜
-// 在這個專案中 有些畫面的這個部分是會動的
-// 有些部分是固定的
-// 端看使用到這部分的 Composable 怎麼去
-// 使用這邊定義的參數
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryTopAppBar(
