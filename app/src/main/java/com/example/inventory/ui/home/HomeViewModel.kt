@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.stateIn
 /**
  * ViewModel to retrieve all items in the Room database.
  */
-// HomeScreen 是 UI
 // HomeViewModel 代表 UI的狀態
 // HomeViewModel 是 一個類
 // 他的主建構式 需要 傳入 其他的類
@@ -44,8 +43,7 @@ class HomeViewModel(
 ) : ViewModel() {
 
     /**
-     * Holds home ui state. The list of items are retrieved from [ItemsRepository] and mapped to
-     * [HomeUiState]
+     * 保存當前的 HomeScreen UI 狀態。從 [ItemsRepository] 獲取項目列表並映射到 [HomeUiState]
      */
     // HomeViewModel 只有一個屬性
     // 就叫做 homeUiState
@@ -59,19 +57,21 @@ class HomeViewModel(
     // 方便做些和資料庫的操作有關的事情
     // 而那些事就不是我們需要知道的細節
     val homeUiState: StateFlow<HomeUiState> =
-        itemsRepository.getAllItemsStream().map { HomeUiState(it) }
+        itemsRepository.getAllItemsStream() // 從 repository 獲取項目的流
+        .map { HomeUiState(it) } // 將項目映射到 HomeUiState
             .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = HomeUiState()
+                scope = viewModelScope, // ViewModel 的生命週期感知範圍
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), // 分享策略
+                initialValue = HomeUiState() // UI 狀態的初始值
             )
 
     companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
+        private const val TIMEOUT_MILLIS = 5_000L  // 訂閱的超時持續時間
     }
 }
 
 /**
- * Ui State for HomeScreen
+ * 表示 HomeScreen UI 狀態的數據類。
+ * [HomeUiState] 保存要顯示在 HomeScreen 上的項目列表。默認初始化為空列表。
  */
 data class HomeUiState(val itemList: List<Item> = listOf())
