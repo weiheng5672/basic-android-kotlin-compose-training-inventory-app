@@ -110,36 +110,56 @@ fun HomeScreen(
     // 包括 導覽、AppBar的設定
     val homeUiState by viewModel.homeUiState.collectAsState()
 
-    // 這個變數就和AppBar的設定有關
+    // 這個變數就和AppBar的設定有關 它其實可以省略掉
+    // 直接在需要的地方 使用 TopAppBarDefaults.enterAlwaysScrollBehavior()
+    // 但這樣可以增加可讀性
+    // 強調了這個 Composable 的 TopAppBar 要是可以動的
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    // Scaffold 是 Jetpack Compose 提供的Composable
+    // 它可以設定整個畫面的框架 包括 topBar、浮動式按鈕
+    // 這邊看不出 浮動式按鈕式的位置
+    // 根據程式執行情況 是在 右下角
+    // 不曉得 是訂死的 還是可調的
     Scaffold(
 
+        // 外觀設定
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
+        // 應用程式的標題欄（App Bar）
         topBar = {
             InventoryTopAppBar(
+                // AppBar顯示的文字
                 title = stringResource(HomeDestination.titleRes),
+                // 沒有上一頁
                 canNavigateBack = false,
+                // 滾動行為設定 根據上面 它是能動的
                 scrollBehavior = scrollBehavior
             )
         },
 
+        // 浮動式按鈕
         floatingActionButton = {
+
             FloatingActionButton(
+                // 按鈕被案下的行為
                 onClick = navigateToItemEntry,
+                // 按鈕的形狀
                 shape = MaterialTheme.shapes.medium,
+                // 按鈕外觀
                 modifier = Modifier
                     .padding(
                         end = WindowInsets.safeDrawing.asPaddingValues()
                             .calculateEndPadding(LocalLayoutDirection.current)
                     )
             ) {
+                //按鈕的圖示
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(R.string.item_entry_title)
                 )
             }
+
         },
 
     ) {
