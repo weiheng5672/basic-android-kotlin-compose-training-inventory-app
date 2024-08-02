@@ -74,19 +74,49 @@ object HomeDestination : NavigationDestination {
 /**
  * Entry route for Home screen
  */
+
+// 這邊關注兩個重點
+// 第一 導覽
+// 第二 從ViewModel 獲得狀態
+// 剩下的東西雖然也很重要
+// 就是如何使用 各種Composable 呈現畫面
+// 但那就是藝術層面的問題了
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+
     navigateToItemEntry: () -> Unit,
     navigateToItemUpdate: (Int) -> Unit,
     modifier: Modifier = Modifier,
+
+    // 在安卓的體系裡 ViewModel 本身雖然是個類
+    // 但他卻無法自行處理 需要傳入參數的建構式
+    // 需要透過 所謂的 viewModel factory 去幫助他
+    // 我一直覺得這是一種深層次的缺陷 但反正目前他就是要這麼做
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+
+    // 本專案中 所有的 建構式需要傳入參數的 ViewModel
+    // 都是在 AppViewModelProvider 統一進行
+
 ) {
+
+    // 前面提過 viewModel 透過 Repository 向 資料庫取得資料
+    // 取得的資料基於一些因素 是一種比較特殊的 資料型態 Flow
+    // 但是在這邊
+    // 一來透過 .collectAsState() 將Flow 變成 State
+    // 二來透過 by委託屬性的方式
+    // homeUiState 操作裡來就像個 一般的 HomeUiState
+    // 至此 其餘就是如何顯示畫面的問題
+    // 包括 導覽、AppBar的設定
     val homeUiState by viewModel.homeUiState.collectAsState()
+
+    // 這個變數就和AppBar的設定有關
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
+
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+
         topBar = {
             InventoryTopAppBar(
                 title = stringResource(HomeDestination.titleRes),
@@ -94,6 +124,7 @@ fun HomeScreen(
                 scrollBehavior = scrollBehavior
             )
         },
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = navigateToItemEntry,
@@ -110,14 +141,26 @@ fun HomeScreen(
                 )
             }
         },
-    ) { innerPadding ->
+
+    ) {
+
+        innerPadding ->
         HomeBody(
+
+            // 就是這裡 由於 homeUiState 使用了by委託屬性的方式
+            // 即使從 viewModel 取得的是所謂的 Flow
+            // 並轉換成所謂的 State 這種高度封裝的形式
+            // 這邊使用 homeUiState 依然像 使用一個 HomeUiState類型的變數
             itemList = homeUiState.itemList,
+
             onItemClick = navigateToItemUpdate,
             modifier = modifier.fillMaxSize(),
             contentPadding = innerPadding,
+
         )
+
     }
+
 }
 
 @Composable
