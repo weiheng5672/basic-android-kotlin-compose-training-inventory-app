@@ -176,6 +176,7 @@ fun HomeScreen(
             itemList = homeUiState.itemList,
 
             // 點擊項目時的處理函數
+            // 這個是資訊卡被點擊時 要做的動作
             onItemClick = navigateToItemUpdate,
             
             // 設置 HomeBody 的外觀和填滿整個可用區域
@@ -235,7 +236,13 @@ private fun InventoryList(
             InventoryItem(item = item,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
-                    .clickable { onItemClick(item) })
+                    // 這部分是個關鍵
+                    // 他表示 這個Composable 是可以被點擊的
+                    // 被點擊的時候 會 執行 onItemClick(item)
+                    // 它是外部傳進來的 lambda
+                    .clickable { onItemClick(item) }
+
+            )
         }
     }
 }
