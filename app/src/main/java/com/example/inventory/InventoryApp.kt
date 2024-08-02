@@ -37,6 +37,12 @@ import com.example.inventory.ui.navigation.InventoryNavHost
 /**
  * Top level composable that represents screens for the application.
  */
+// 如上所述 這裡是所謂的 Top level composable
+// UI 就是呈現在手機螢幕上的畫面
+// 而這裡就是本專案中 UI的最上層
+// 意思就是 呼叫InventoryApp
+// 就相當於 呼叫了所有的UI
+// 呼叫的InventoryApp 就是 MainActivity 
 @Composable
 fun InventoryApp(navController: NavHostController = rememberNavController()) {
     InventoryNavHost(navController = navController)
@@ -45,6 +51,7 @@ fun InventoryApp(navController: NavHostController = rememberNavController()) {
 /**
  * App bar to display title and conditionally display the back navigation.
  */
+// 這裡定義了
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryTopAppBar(

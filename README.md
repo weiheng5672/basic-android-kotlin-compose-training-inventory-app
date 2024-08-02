@@ -41,7 +41,7 @@ Getting Started
 6. AppContainer
 7. InventoryApplication
 
-8. InventoryApp
+8. InventoryApp、MainActivity
 9. InventoryNavGraph
 10. NavigationDestination
 
