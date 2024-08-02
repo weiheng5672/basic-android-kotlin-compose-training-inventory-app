@@ -57,8 +57,9 @@ class HomeViewModel(
     // 方便做些和資料庫的操作有關的事情
     // 而那些事就不是我們需要知道的細節
     val homeUiState: StateFlow<HomeUiState> =
-        itemsRepository.getAllItemsStream() // 從 repository 獲取項目的流
-        .map { HomeUiState(it) } // 將項目映射到 HomeUiState
+
+        itemsRepository.getAllItemsStream() // 從 repository 獲取項目的 Flow
+            .map { HomeUiState(it) } // 將項目映射到 HomeUiState
             .stateIn(
                 scope = viewModelScope, // ViewModel 的生命週期感知範圍
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS), // 分享策略
