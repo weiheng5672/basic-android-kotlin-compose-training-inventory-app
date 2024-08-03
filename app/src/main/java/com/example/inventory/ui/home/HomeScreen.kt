@@ -213,6 +213,14 @@ private fun HomeBody(
         } else {
             InventoryList(
                 itemList = itemList,
+                // it 是 整個 lambda 的參數
+                // 而在 InventoryList 的定義中
+                // 這個 lambda 的類型是 (Item) -> Unit
+                // 所以 這裡的 it 類型就是 Item
+                // 然而 onItemClick(it.id) 這整個東西
+                // 是 HomeBody 定義的 lambda
+                // 他的類型是 (Int) -> Unit
+                // 而 Item的id 確實是 Int
                 onItemClick = { onItemClick(it.id) },
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))

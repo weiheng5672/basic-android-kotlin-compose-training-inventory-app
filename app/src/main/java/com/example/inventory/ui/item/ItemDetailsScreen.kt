@@ -79,6 +79,7 @@ object ItemDetailsDestination : NavigationDestination {
 // 點擊不同的 Item 顯示的畫面都要不一樣
 // 但 ItemDetailsScreen 只會有一個
 // 只不過 它顯示的東西 隨不同的Item 而不同
+// 他們的 位址 也會不一樣
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemDetailsScreen(
