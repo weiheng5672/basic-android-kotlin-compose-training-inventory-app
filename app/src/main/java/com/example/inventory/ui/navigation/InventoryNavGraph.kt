@@ -57,18 +57,20 @@ fun InventoryNavHost(
         // 他就會從那個地方 跳轉到 HomeScreen
         composable(route = HomeDestination.route) {
 
-            // HomeScreen 有兩個形參
-            // 分別用來指示 兩個可被點擊的地方 被點擊後的行為
-            // 之所以講的那麼抽象 是因為這邊就顯示出這些信息而已
-            // 實際上 那兩個地方 在HomeScreen 有定義清楚
+            // HomeScreen 需要兩個參數，分別處理兩個點擊事件
+            // 在 HomeScreen 中定義了這兩個可點擊的區域及其行為
             // 他們被點擊後 會觸發 navController
             // 導覽至另一個畫面
             HomeScreen(
 
-                // 被按下後會導覽至 ItemEntryDestination.route 也就是 ItemEntryScreen
+                // 這個點擊事件 會導覽至 ItemEntryScreen
+                // 因為 ItemEntryDestination.route 是 ItemEntryScreen的位址
+                // 在 HomeScreen 中 這個點擊事件 是 浮動式按鈕需要的
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
 
-                //
+                // 如果畫面需要根據不同的 ID 顯示不同的內容，
+                // 這樣的字符串模板可以幫助你方便地構造導航路由
+                // 在 HomeScreen 中 這個點擊事件 是 各個不同的資訊卡 需要的
                 navigateToItemUpdate = {
                     navController.navigate("${ItemDetailsDestination.route}/${it}")
                 }
@@ -77,18 +79,23 @@ fun InventoryNavHost(
         }
 
         // ItemEntryDestination.route 就是 ItemEntryScreen 的位址
-        // 這邊再強調，在安卓Compose導覽的邏輯中
+        // 在安卓Compose導覽的邏輯中
         // 就是要在這邊指定 各個composable 的位址
         composable(route = ItemEntryDestination.route) {
 
             ItemEntryScreen(
+
+                // 點擊後返回上一層
                 navigateBack = { navController.popBackStack() },
+
+
                 onNavigateUp = { navController.navigateUp() }
             )
 
         }
 
 
+        // 配置 ItemDetailsScreen 畫面，並接收項目 ID 作為參數
         composable(
             route = ItemDetailsDestination.routeWithArgs,
             arguments = listOf(navArgument(ItemDetailsDestination.itemIdArg) {

@@ -27,32 +27,49 @@ import java.text.NumberFormat
 /**
  * ViewModel to validate and insert items in the Room database.
  */
+// 這個ViewModel 會儲存 使用者輸入進框框裡的東西
+// 然後再 透過 Repository 存到資料庫裡
 class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
      * Holds current item ui state
      */
-    var itemUiState by mutableStateOf(ItemUiState())
-        private set
+    // 無論要輸入多少東西 就只有一個屬性 去表示狀態
+    // 需要輸入的東西 都統一在 ItemUiState 裡面
+    // ItemUiState 又被 mutableStateOf 封裝
+    // 是個比較抽象的概念 但是 透過 委託屬性
+    // itemUiState 可以當作 類型為ItemUiState 的屬性 去操作
+    var itemUiState by mutableStateOf(
+        // 空的建構式 意味生成的物件會採用預設值
+        ItemUiState()
+    )
+        private set // 將 itemUiState 的set 設為私有
 
     /**
      * Updates the [itemUiState] with the value provided in the argument. This method also triggers
      * a validation for input values.
      */
     fun updateUiState(itemDetails: ItemDetails) {
-        itemUiState =
-            ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))
+
+        itemUiState = ItemUiState(
+            itemDetails = itemDetails,
+            isEntryValid = validateInput(itemDetails)
+        )
+
     }
 
     /**
      * Inserts an [Item] in the Room database
      */
+    // 如果輸入的東西合法
+    // 透過 Repository 存到資料庫
     suspend fun saveItem() {
         if (validateInput()) {
             itemsRepository.insertItem(itemUiState.itemDetails.toItem())
         }
     }
 
+    // 驗證輸入的東西合不合法
     private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
         return with(uiState) {
             name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
@@ -63,11 +80,16 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
 /**
  * Represents Ui State for an Item.
  */
+// 輸入的狀態 又分成兩部分
 data class ItemUiState(
+    // 輸入的東西
     val itemDetails: ItemDetails = ItemDetails(),
+    // 輸入的東西 合不合法
     val isEntryValid: Boolean = false
 )
 
+// 輸入的東西 有預設值
+// 但是 id 不是使用者輸入的
 data class ItemDetails(
     val id: Int = 0,
     val name: String = "",

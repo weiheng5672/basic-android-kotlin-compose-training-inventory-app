@@ -73,6 +73,12 @@ object ItemDetailsDestination : NavigationDestination {
     val routeWithArgs = "$route/{$itemIdArg}"
 }
 
+// 這個畫面 比較複雜
+// 因為 可以有很多個 Item
+// 數量隨使用者的新增而增加 也隨使用者的刪除而減少
+// 點擊不同的 Item 顯示的畫面都要不一樣
+// 但 ItemDetailsScreen 只會有一個
+// 只不過 它顯示的東西 隨不同的Item 而不同
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemDetailsScreen(

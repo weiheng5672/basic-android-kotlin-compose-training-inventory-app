@@ -74,8 +74,14 @@ fun ItemEntryScreen(
         }
     ) { innerPadding ->
         ItemEntryBody(
+            // 畫面預設狀態
             itemUiState = viewModel.itemUiState,
+            // 當畫面發生變化 要執行的動作
             onItemValueChange = viewModel::updateUiState,
+
+            // 儲存按鈕被按下時
+            // 會調用 ViewModel 的 saveItem
+            // 並回到 上一頁
             onSaveClick = {
                 // Note: If the user rotates the screen very fast, the operation may get cancelled
                 // and the item may not be saved in the Database. This is because when config
@@ -86,6 +92,7 @@ fun ItemEntryScreen(
                     navigateBack()
                 }
             },
+
             modifier = Modifier
                 .padding(
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
@@ -129,7 +136,7 @@ fun ItemEntryBody(
 fun ItemInputForm(
     itemDetails: ItemDetails,
     modifier: Modifier = Modifier,
-    onValueChange: (ItemDetails) -> Unit = {},
+    onValueChange: (ItemDetails) -> Unit,
     enabled: Boolean = true
 ) {
     Column(
@@ -137,8 +144,16 @@ fun ItemInputForm(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
     ) {
         OutlinedTextField(
+            // 這兩行程式 是 核心
+            // 簡單講 value 是 這個框框本身的內容
+            // itemDetails.name 是 OutlinedTextField 初始化時顯示的預設值
+            // 首次呈現時，文本框會顯示 itemDetails.name 的內容
             value = itemDetails.name,
-            onValueChange = { onValueChange(itemDetails.copy(name = it)) },
+            // it 就是 用戶在文本框中的輸入
+            // 當 文本框中的東西 發生變化
+            // 會調用 ViewModel 中的 updateUiState
+            onValueChange = { onValueChange(itemDetails.copy(name = it))},
+
             label = { Text(stringResource(R.string.item_name_req)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -150,8 +165,12 @@ fun ItemInputForm(
             singleLine = true
         )
         OutlinedTextField(
+            // 框框本身的內容
             value = itemDetails.price,
+            // 當框框內容 發生變化時 執行的動作
+            // it 就是 用戶在文本框中的輸入
             onValueChange = { onValueChange(itemDetails.copy(price = it)) },
+
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
             label = { Text(stringResource(R.string.item_price_req)) },
             colors = OutlinedTextFieldDefaults.colors(
@@ -165,8 +184,12 @@ fun ItemInputForm(
             singleLine = true
         )
         OutlinedTextField(
+            // 框框本身的內容
             value = itemDetails.quantity,
+            // 當框框內容 發生變化時 執行的動作
+            // it 就是 用戶在文本框中的輸入
             onValueChange = { onValueChange(itemDetails.copy(quantity = it)) },
+
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(stringResource(R.string.quantity_req)) },
             colors = OutlinedTextFieldDefaults.colors(
