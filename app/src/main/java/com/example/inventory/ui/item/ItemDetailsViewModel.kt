@@ -35,6 +35,9 @@ class ItemDetailsViewModel(
     private val itemsRepository: ItemsRepository,
 ) : ViewModel() {
 
+    // itemId 是整數型態
+    // itemIdArg 是字串
+    // 在 導覽程式中 會將 ItemDetailsDestination.itemIdArg 指定為Int
     private val itemId: Int = checkNotNull(savedStateHandle[ItemDetailsDestination.itemIdArg])
 
     /**

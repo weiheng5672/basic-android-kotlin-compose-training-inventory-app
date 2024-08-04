@@ -121,8 +121,15 @@ fun InventoryNavHost(
                     type = NavType.IntType
                 }
             )
+            // 當導航系統將 arguments 傳遞給 Composable
+            // 這些 arguments 會被存儲在 一個 Bundle 中
+            // 這個 組合函數 對應的 ViewModel
+            // 會透過 SavedStateHandle 從 那個 Bundle 中提取 arguments
 
         ) {
+
+            // 形如 "item_details/123" 這種路由都會被導覽到
+            // ItemDetailsScreen 這個 組合函數
             ItemDetailsScreen(
                 navigateToEditItem = { navController.navigate("${ItemEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() }
