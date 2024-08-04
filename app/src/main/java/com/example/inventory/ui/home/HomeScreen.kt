@@ -86,7 +86,13 @@ object HomeDestination : NavigationDestination {
 fun HomeScreen(
 
     navigateToItemEntry: () -> Unit,
+
+    // 每次用戶選擇不同的 Item，會根據 itemId 重新加載相應的詳細資訊
+    // itemId 就是 這個 lambda的輸入參數
+    // 這個 ID 會被 導覽系統 拿去使用
+    // 產生 對應的 詳細資訊卡的 位址
     navigateToItemUpdate: (Int) -> Unit,
+
     modifier: Modifier = Modifier,
 
     // 在安卓的體系裡 ViewModel 本身雖然是個類
@@ -177,6 +183,7 @@ fun HomeScreen(
 
             // 點擊項目時的處理函數
             // 這個是資訊卡被點擊時 要做的動作
+            // 這個 lambda 會需要一個 Int參數
             onItemClick = navigateToItemUpdate,
             
             // 設置 HomeBody 的外觀和填滿整個可用區域
@@ -194,9 +201,19 @@ fun HomeScreen(
 
 @Composable
 private fun HomeBody(
+
+    // 下面的lambda需要的 ID參數
+    // 就是從這個List來的
     itemList: List<Item>,
+
+    // 這個是資訊卡被點擊時 要做的動作
+    // 輸入參數 是 不同的資訊卡 對應的ID
+    // 這個 ID 會被 導覽系統 拿去使用
+    // 產生 對應的 詳細資訊卡的 位址
     onItemClick: (Int) -> Unit,
+
     modifier: Modifier = Modifier,
+
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     Column(
@@ -212,7 +229,9 @@ private fun HomeBody(
             )
         } else {
             InventoryList(
+
                 itemList = itemList,
+
                 // it 是 整個 lambda 的參數
                 // 而在 InventoryList 的定義中
                 // 這個 lambda 的類型是 (Item) -> Unit
@@ -222,6 +241,7 @@ private fun HomeBody(
                 // 他的類型是 (Int) -> Unit
                 // 而 Item的id 確實是 Int
                 onItemClick = { onItemClick(it.id) },
+
                 contentPadding = contentPadding,
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
             )

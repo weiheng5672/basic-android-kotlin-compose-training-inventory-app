@@ -95,12 +95,33 @@ fun InventoryNavHost(
         }
 
 
-        // 配置 ItemDetailsScreen 畫面，並接收項目 ID 作為參數
+        // 因為有很多個 Item，每個 Item 都有一個唯一的 ID
+        // 這個畫面需要根據 Item 的 ID 顯示不同的內容
+        // 當用戶點擊不同的 Item 時，會傳遞該 Item 的 ID 作為導航參數
+        // 導航到這個畫面的位址會包含這個 ID，例如 "item_details/123"
         composable(
+
+            // 導航系統會將 "item_details/123" 與 ItemDetailsDestination.routeWithArgs（即 "item_details/{itemId}"）進行匹配。
+            // 導航系統識別到 {itemId} 部分需要解析
             route = ItemDetailsDestination.routeWithArgs,
-            arguments = listOf(navArgument(ItemDetailsDestination.itemIdArg) {
-                type = NavType.IntType
-            })
+
+            // 他負責解析
+            // 之所以要解析是因為 Item 的 ID 原本是整數
+            // 但是 在形成 路由(位址) 時 被轉變成字串
+            // 又但是 在 ItemDetailsScreen 中
+            // 我們又需要 他變回去整數 好讓我們從資料庫中將他提取出來
+            arguments = listOf(
+
+                // 這行代碼告訴導航系統
+                // 這個 Composable 需要一個名為 itemId 的參數
+                navArgument(
+                    ItemDetailsDestination.itemIdArg
+                ) {
+                    //指定了參數的類型為 Int
+                    type = NavType.IntType
+                }
+            )
+
         ) {
             ItemDetailsScreen(
                 navigateToEditItem = { navController.navigate("${ItemEditDestination.route}/$it") },
