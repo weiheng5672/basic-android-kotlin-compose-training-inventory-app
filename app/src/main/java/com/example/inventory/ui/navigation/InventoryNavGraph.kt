@@ -68,9 +68,20 @@ fun InventoryNavHost(
                 // 在 HomeScreen 中 這個點擊事件 是 浮動式按鈕需要的
                 navigateToItemEntry = { navController.navigate(ItemEntryDestination.route) },
 
-                // 如果畫面需要根據不同的 ID 顯示不同的內容，
-                // 這樣的字符串模板可以幫助你方便地構造導航路由
-                // 在 HomeScreen 中 這個點擊事件 是 各個不同的資訊卡 需要的
+                // ItemDetailsScreen 會有個預設的 route
+                // "item_details/{itemId}"
+                // 這個專案中 只有一個 ItemDetailsScreen
+                // 而這個 ItemDetailsScreen 的 route 就是 "item_details/{itemId}"
+
+                // 但是 萬惡的但是來了
+                // 針對不同的資訊卡 需要在同一個 ItemDetailsScreen中 顯示不同的資料
+                // 程式在運行期間 點擊資訊卡 觸發的 route 卻不會是 "item_details/{itemId}"
+                // 而是 形如 "item_details/123"
+
+                // 在 Jetpack Navigation 中，定義一個像 "item_details/{itemId}" 這樣的路由時
+                // {itemId} 是一個佔位符，用來匹配動態參數。
+                // 當你傳入 "item_details/123" 這樣的路徑時， 導航組件會自動將 "123" 填充到 itemId 這個參數中，
+                // 並識別出這是與 "item_details/{itemId}" 匹配的路徑，因此會正確地導覽至 ItemDetailsScreen。
                 navigateToItemUpdate = {
                     navController.navigate("${ItemDetailsDestination.route}/${it}")
                 }
@@ -101,8 +112,20 @@ fun InventoryNavHost(
         // 導航到這個畫面的位址會包含這個 ID，例如 "item_details/123"
         composable(
 
-            // 導航系統會將 "item_details/123" 與 ItemDetailsDestination.routeWithArgs（即 "item_details/{itemId}"）進行匹配。
-            // 導航系統識別到 {itemId} 部分需要解析
+            // ItemDetailsScreen 會有個預設的 route
+            // "item_details/{itemId}"
+            // 這個專案中 只有一個 ItemDetailsScreen
+            // 而這個 ItemDetailsScreen 的 route 就是 "item_details/{itemId}"
+
+            // 但是 萬惡的但是來了
+            // 針對不同的資訊卡 需要在同一個 ItemDetailsScreen中 顯示不同的資料
+            // 程式在運行期間 點擊資訊卡 觸發的 route 卻不會是 "item_details/{itemId}"
+            // 而是 形如 "item_details/123"
+
+            // 在 Jetpack Navigation 中，定義一個像 "item_details/{itemId}" 這樣的路由時
+            // {itemId} 是一個佔位符，用來匹配動態參數。
+            // 當你傳入 "item_details/123" 這樣的路徑時， 導航組件會自動將 "123" 填充到 itemId 這個參數中，
+            // 並識別出這是與 "item_details/{itemId}" 匹配的路徑，因此會正確地導覽至 ItemDetailsScreen。
             route = ItemDetailsDestination.routeWithArgs,
 
             // 他負責解析
